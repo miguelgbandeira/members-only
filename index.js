@@ -2,8 +2,8 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
+require("./middleware/auth");
 
 const authenticationRouter = require("./routes/authentication");
 
@@ -19,6 +19,7 @@ const hashSecret = process.env.HASH_SECRET;
 app.use(
   session({ secret: hashSecret, resave: false, saveUninitialized: true })
 );
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
