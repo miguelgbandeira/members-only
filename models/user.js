@@ -3,7 +3,7 @@ const UserSchema = new mongoose.Schema({
   first_name: { type: String, required: true, maxLength: 100 },
   last_name: { type: String, required: true, maxLength: 100 },
   username: { type: String, required: true, maxLength: 100 },
-  email: { type: String, required: true },
+  email: { type: String },
   password: { type: String, required: true },
   membership: { type: String },
   isAdmin: { type: Boolean },
