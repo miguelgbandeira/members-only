@@ -1,5 +1,6 @@
 const passport = require("passport");
 const User = require("../models/user");
+const { createHash } = require("../middleware/auth");
 
 exports.get_signup = async (req, res, next) => {
   res.render("sign-up-form");
@@ -7,12 +8,13 @@ exports.get_signup = async (req, res, next) => {
 
 exports.submit_signup = async (req, res, next) => {
   try {
+    const hashedPassword = await createHash(req.body.password);
     const user = new User({
       first_name: req.body.firstName,
       last_name: req.body.lastName,
       username: req.body.username,
       email: req.body.email ? req.body.email : undefined,
-      password: req.body.password,
+      password: hashedPassword,
       membership: "new",
       isAdmin: false,
     });
