@@ -22,7 +22,7 @@ exports.submit_signup = [
     .withMessage("Last name must be specified.")
     .isAlphanumeric()
     .withMessage("Last name has non-alphanumeric characters."),
-  body("last_name")
+  body("username")
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -93,23 +93,36 @@ exports.get_logout = (req, res, next) => {
   });
 };
 
-exports.join_club = async (req, res, next) => {
-  const secret = process.env.CLUB_SECRET_CODE;
-  const passcodeInserted = req.body.passcode;
-  if (passcodeInserted === secret) {
-    try {
-      const user = await User.findById(req.user._id);
-      if (!user) {
-        return res.status(404).send("User not found");
+exports.join_club = [
+  body("passcode")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Passcode must be specified."),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      const secret = process.env.CLUB_SECRET_CODE;
+      const passcodeInserted = req.body.passcode;
+      if (passcodeInserted === secret) {
+        try {
+          const user = await User.findById(req.user._id);
+          if (!user) {
+            return res.status(404).send("User not found");
+          }
+
+          user.isMember = true;
+          await user.save();
+
+          res.status(200).redirect("/");
+        } catch (error) {
+          console.error(error);
+          res.status(500).send("Server error");
+        }
       }
-
-      user.isMember = true;
-      await user.save();
-
-      res.status(200).send("User updated successfully");
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Server error");
+    } else {
+      res.redirect("/");
     }
-  }
-};
+  },
+];
