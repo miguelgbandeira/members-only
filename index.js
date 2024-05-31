@@ -19,9 +19,13 @@ const hashSecret = process.env.HASH_SECRET;
 app.use(
   session({ secret: hashSecret, resave: false, saveUninitialized: true })
 );
+app.use(express.urlencoded({ extended: false }));
+
+// Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+
+// Middleware to make the user available in all views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
@@ -30,6 +34,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.render("index", { user: req.user });
 });
+
 app.use("/auth", authenticationRouter);
 
 app.listen(3000, () => console.log("app listening on port 3000!"));

@@ -8,6 +8,16 @@
   <% if (user) {%>
     <h1>WELCOME BACK <%= user.username %></h1>
     <a href="auth/log-out">LOG OUT</a>
+    <% if (user.isMember) {%>
+      <p>MEMBER!</p>
+    <% } else { %>
+      <p>You are not a member of the Club</p>
+      <form action="auth/club/join" method="POST">
+        <label for="passcode">Enter the secret passcode to become a member: </label>
+        <input type="text" name="passcode" />
+        <button>Join now</button>
+      </form>
+    <%}%>
   <% } else { %>
     <h1>please log in</h1>
     <form action="auth/log-in" method="POST">

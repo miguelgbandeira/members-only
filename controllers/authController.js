@@ -41,3 +41,24 @@ exports.get_logout = (req, res, next) => {
     res.redirect("/");
   });
 };
+
+exports.join_club = async (req, res, next) => {
+  const secret = process.env.CLUB_SECRET_CODE;
+  const passcodeInserted = req.body.passcode;
+  if (passcodeInserted === secret) {
+    try {
+      const user = await User.findById(req.user._id);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      user.isMember = true;
+      await user.save();
+
+      res.status(200).send("User updated successfully");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+    }
+  }
+};
