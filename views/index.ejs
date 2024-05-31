@@ -19,14 +19,8 @@
       </form>
     <%}%>
   <% } else { %>
-    <h1>please log in</h1>
-    <form action="auth/log-in" method="POST">
-      <label for="username">Username</label>
-      <input name="username" placeholder="username" type="text" />
-      <label for="password">Password</label>
-      <input name="password" type="password" />
-      <button>Log In</button>
-    </form>
+    <a href="/auth/log-in">Log In</a>
+    <a href="/auth/sign-up">Create an account</a>
   <%}%>
 </body>
 </html>
