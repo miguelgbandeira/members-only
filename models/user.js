@@ -5,8 +5,8 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, maxLength: 100 },
   email: { type: String },
   password: { type: String, required: true },
-  membership: { type: String },
-  isAdmin: { type: Boolean },
+  isMember: { type: Boolean, default: false },
+  isAdmin: { type: Boolean, default: false },
 });
 
 UserSchema.virtual("name").get(function () {

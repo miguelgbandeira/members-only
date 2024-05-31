@@ -15,8 +15,6 @@ exports.submit_signup = async (req, res, next) => {
       username: req.body.username,
       email: req.body.email ? req.body.email : undefined,
       password: hashedPassword,
-      membership: "new",
-      isAdmin: false,
     });
     const result = await user.save();
     res.redirect("/");
