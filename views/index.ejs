@@ -2,43 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css">
   <title>Welcome</title>
 </head>
 <body>
-  <% if (user) { %>
-    <h1>WELCOME BACK <%= user.username %></h1>
-    <a href="auth/log-out">LOG OUT</a>
-    
-    <% messages.forEach(function(message) { %>
-      <p><%= message.title %></p>
-      <p><%= message.body %></p>
-      <% if (user.isMember) { %>
-        <p>by: <%= message.author.username %> on <%= message.timestamp %></p>
+  <div class="navbar">
+    <div class="logo-container">
+      <h2 class="logo">Members Only 🤫</h2>
+    </div>
+    <div class="buttons-container">
+      <% if (user) { %>
+        <a href="/auth/log-out" class="button">Log out</a>
       <% } else { %>
-        <p>by: ******* on ******* </p>
+        <a href="/auth/log-in" class="button">Log In</a>
+        <a href="/auth/sign-up" class="button">Register</a>
       <% } %>
-    <% }); %>
-
-    <% if (user.isMember) { %>
-      <p>MEMBER!</p>
-      <form action="/message" method="POST">
-        <input type="text" name="title" placeholder="Title">
-        <input type="textarea" name="message" placeholder="Message">
-        <button>Send new message</button>
-      </form>
-    <% } else { %>
-      <p>You are not a member of the Club</p>
-      <form action="auth/club/join" method="POST">
-        <label for="passcode">Enter the secret passcode to become a member: </label>
-        <input type="text" name="passcode" />
-        <button>Join now</button>
-      </form>
+    </div>
+  </div>
+  <% if (user) { %>
+    <div class="home-message">
+      <p class="welcome-message">Welcome back <%= user.username %></p>
+      <% if (user.isMember) { %>
+        <p class="membership-message">You have a membership</p>
+      <% } %>
+    </div>
+  <% } %>
+  <div class="chat">
+    <div class="chat-title">
+      <h3>chat</h3>
+    </div>
+    <div class="messages-container">
+      <div class="message-card">
+        <% messages.forEach(function(message) { %>
+          <h4><%= message.title %></h4>
+          <p><%= message.body %></p>
+          <% if (user && user.isMember) { %>
+            <p class="author-info">by: <%= message.author.username %> on <%= message.timestamp %></p>
+          <% } else { %>
+            <p class="author-info">by: ******* on ******* </p>
+          <% } %>
+        <% }); %>
+      </div>
+    </div>
+    <% if (user && user.isMember) { %>
+      <div class="send-container">
+        <form action="/message" method="POST">
+          <input type="text" name="title" placeholder="Title">
+          <textarea name="message" placeholder="Message"></textarea>
+          <button type="submit" class="button">Send New Message</button>
+        </form>
+      </div>
     <% } %>
-
-  <% } else { %>
-    <a href="/auth/log-in">Log In</a>
-    <a href="/auth/sign-up">Create an account</a>
+  </div>
+  <div>
+    <% if (!user) { %>
+      <p class="membership-message" style="text-align: center;">Log in or create an account to chat</p>
+      <% } %>
+  </div>
+  
+  <% if (user && !user.isMember) { %>
+    <p>You are not a member of the Club</p>
+    <form action="/auth/club/join" method="POST">
+      <label for="passcode">Enter the secret passcode to become a member: </label>
+      <input type="text" name="passcode">
+      <button type="submit">Join now</button>
+    </form>
   <% } %>
 </body>
-</html> 
+</html>

@@ -1,1 +1,101 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1em;
+}
 
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #262627;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Style for spacing between buttons */
+.button + .button {
+  margin-left: 10px;
+}
+
+.welcome-message {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: -0.8em;
+}
+
+.membership-message {
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 60%;
+  height: 700px; /* Adjust height as needed */
+  margin: auto;
+}
+
+.chat-title {
+  background-color: #262627;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.chat-title > h3 {
+  padding-left: 20px;
+  color: white;
+  margin: 0;
+}
+
+.messages-container {
+  overflow-y: auto; /* Add scrollbar when needed */
+  flex: 1; /* Take remaining space */
+  padding: 10px;
+}
+
+.message-card {
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.send-container {
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+.message-card .author-info {
+  font-style: italic;
+}
+
+.send-container {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.send-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.send-container input[type="text"],
+.send-container textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
