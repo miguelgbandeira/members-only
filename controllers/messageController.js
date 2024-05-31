@@ -4,7 +4,6 @@ const { body, validationResult } = require("express-validator");
 
 exports.get_messages = async (req, res, next) => {
   const messages = await Message.find();
-  console.log(messages);
   res.render("index", { user: req.user, messages });
 };
 

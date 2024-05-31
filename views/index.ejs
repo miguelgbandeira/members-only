@@ -2,25 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Welcome</title>
 </head>
 <body>
-  <% if (user) {%>
+  <% if (user) { %>
     <h1>WELCOME BACK <%= user.username %></h1>
     <a href="auth/log-out">LOG OUT</a>
-     <% messages.forEach(function(message) { %>
-        <p><%= message.title %></p>
-        <p><%= message.body %></p>
+    
+    <% messages.forEach(function(message) { %>
+      <p><%= message.title %></p>
+      <p><%= message.body %></p>
+      <% if (user.isMember) { %>
         <p><%= message.timestamp %></p>
         <p><%= message.author %></p>
-      <% }); %>
-    <% if (user.isMember) {%>
+      <% } else { %>
+        <p>*******</p>
+        <p>*******</p>
+      <% } %>
+    <% }); %>
+
+    <% if (user.isMember) { %>
       <p>MEMBER!</p>
       <form action="/message" method="POST">
         <input type="text" name="title" placeholder="Title">
         <input type="textarea" name="message" placeholder="Message">
         <button>Send new message</button>
-    </form>
+      </form>
     <% } else { %>
       <p>You are not a member of the Club</p>
       <form action="auth/club/join" method="POST">
@@ -28,10 +35,11 @@
         <input type="text" name="passcode" />
         <button>Join now</button>
       </form>
-    <%}%>
+    <% } %>
+
   <% } else { %>
     <a href="/auth/log-in">Log In</a>
     <a href="/auth/sign-up">Create an account</a>
-  <%}%>
+  <% } %>
 </body>
 </html>
