@@ -26,7 +26,19 @@ exports.submit_signup = [
     .trim()
     .isLength({ min: 1 })
     .escape()
-    .withMessage("Username must be specified."),
+    .withMessage("Username must be specified.")
+    .custom(async (value) => {
+      const user = await User.findUserByUsername(value);
+      if (user) {
+        throw new Error("Username already in use");
+      }
+    }),
+  body("password").trim().escape(),
+  body("re-password")
+    .custom((value, { req }) => {
+      return value === req.body.password;
+    })
+    .withMessage("Passwords are not the same"),
 
   async (req, res, next) => {
     try {

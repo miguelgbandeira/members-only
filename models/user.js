@@ -17,4 +17,13 @@ UserSchema.virtual("name").get(function () {
   return fullname;
 });
 
+UserSchema.statics.findUserByUsername = async function (username) {
+  try {
+    const user = await this.findOne({ username: username });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = mongoose.model("User", UserSchema);
