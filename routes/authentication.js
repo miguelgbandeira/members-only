@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
-require;
 
 router.get("/sign-up", authController.get_signup);
 

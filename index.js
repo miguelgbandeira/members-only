@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 require("./middleware/auth");
 
 const authenticationRouter = require("./routes/authentication");
+const messagingRouter = require("./routes/messaging");
+const indexRouter = require("./routes/index");
 
 const mongoDb = process.env.MONGO_CONNECTION;
 mongoose.connect(mongoDb);
@@ -31,10 +33,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("index", { user: req.user });
-});
-
+app.use("/", indexRouter);
 app.use("/auth", authenticationRouter);
+app.use("/message", messagingRouter);
 
 app.listen(3000, () => console.log("app listening on port 3000!"));

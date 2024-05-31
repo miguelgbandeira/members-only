@@ -8,8 +8,19 @@
   <% if (user) {%>
     <h1>WELCOME BACK <%= user.username %></h1>
     <a href="auth/log-out">LOG OUT</a>
+     <% messages.forEach(function(message) { %>
+        <p><%= message.title %></p>
+        <p><%= message.body %></p>
+        <p><%= message.timestamp %></p>
+        <p><%= message.author %></p>
+      <% }); %>
     <% if (user.isMember) {%>
       <p>MEMBER!</p>
+      <form action="/message" method="POST">
+        <input type="text" name="title" placeholder="Title">
+        <input type="textarea" name="message" placeholder="Message">
+        <button>Send new message</button>
+    </form>
     <% } else { %>
       <p>You are not a member of the Club</p>
       <form action="auth/club/join" method="POST">
