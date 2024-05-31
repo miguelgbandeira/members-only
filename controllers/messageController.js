@@ -3,7 +3,7 @@ const Message = require("../models/message");
 const { body, validationResult } = require("express-validator");
 
 exports.get_messages = async (req, res, next) => {
-  const messages = await Message.find();
+  const messages = await Message.find().populate("author");
   res.render("index", { user: req.user, messages });
 };
 

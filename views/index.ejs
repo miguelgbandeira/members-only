@@ -13,11 +13,9 @@
       <p><%= message.title %></p>
       <p><%= message.body %></p>
       <% if (user.isMember) { %>
-        <p><%= message.timestamp %></p>
-        <p><%= message.author %></p>
+        <p>by: <%= message.author.username %> on <%= message.timestamp %></p>
       <% } else { %>
-        <p>*******</p>
-        <p>*******</p>
+        <p>by: ******* on ******* </p>
       <% } %>
     <% }); %>
 
